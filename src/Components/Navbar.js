@@ -23,7 +23,7 @@ export default function Navbar(props) {
     </ul>
   </div>
   <div className="navbar-end">
-    <a className="btn">Logout</a>
+    <a className="btn" onClick={props.logout}>Logout</a>
   </div>
 </div>
     )

@@ -1,8 +1,42 @@
+import { useState } from "react";
 import React from "react";
 
-
+import axios from "axios";
 const SignUp =()=>{
+    const[formdata,setformdata]=useState({
+        username: "",
+        email:"",
+        password: "",
 
+    })
+    const handleChange = (e) => {
+        const { name, value } = e.target;
+        setformdata((prevFormData) => ({
+          ...prevFormData,
+          [name]: value,
+          
+        }));
+      };
+      const handleSubmit = (e) => {
+        e.preventDefault();
+      axios.post("http://127.0.0.1:8000/api/register/", formdata)
+          .then((response) => {
+            // Handle success if needed
+           
+            alert("Form submitted successfully!");
+            console.log(response.data);
+            window.location.href="/dashboard"
+           
+           
+            console.log("Error")
+            alert("Error")
+           
+          })
+          .catch((error) => {
+            // Handle errors if needed
+            console.error("Error submitting form:", error);
+          });
+      };
     const handlelogin =() =>{
 
         window.location.href="/"
@@ -25,24 +59,33 @@ const SignUp =()=>{
 <h2 className="card-title text-3xl font-bold  ">Sign Up</h2>
 
 
-<form >
+<form onSubmit={handleSubmit} >
 
 <div className="form-control w-full max-w-xs">
 <label className="label">
-<span className="label-text">What is your email?</span>
+<span className="label-text">Set Your username?</span>
 <span className="label-text-alt text-red-500">*</span>
 </label>
-<input type="email" required placeholder="Type here" className="input input-bordered w-full max-w-xs" />
+<input type="text" required name="username" onChange={handleChange} value={formdata.username} placeholder="Type here" className="input input-bordered w-full max-w-xs" />
 <label className="label">
 </label>
 </div>
-
 <div className="form-control w-full max-w-xs">
 <label className="label">
-<span className="label-text">What is your password?</span>
+<span className="label-text">What is Your email?</span>
 <span className="label-text-alt text-red-500">*</span>
 </label>
-<input type="password" required placeholder="Type here" className="input input-bordered w-full max-w-xs" />
+<input type="text" required name="email" onChange={handleChange} value={formdata.email} placeholder="Type here" className="input input-bordered w-full max-w-xs" />
+<label className="label">
+</label>
+
+</div>
+<div className="form-control w-full max-w-xs">
+<label className="label">
+<span className="label-text">Set your password?</span>
+<span className="label-text-alt text-red-500">*</span>
+</label>
+<input type="password" required onChange={handleChange} value={formdata.password} name="password" placeholder="Type here" className="input input-bordered w-full max-w-xs" />
 <label className="label">
 </label>
 </div>
@@ -55,7 +98,7 @@ const SignUp =()=>{
 
 
 <div className="w-full flex justify-center mt-5 "  >
-<button className="btn btn-primary">SignUp</button>
+<button className="btn btn-primary" >SignUp</button>
 
 </div>
 

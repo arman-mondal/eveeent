@@ -3,7 +3,7 @@ import "../tailwind.css"
 import axios from "axios";
 const Home =()=>{
     const [formData, setFormData] = useState({
-        email: "",
+        username: "",
         password: "",
       });
 
@@ -17,13 +17,14 @@ const handleChange = (e) => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-  axios.post("https://rupeegainapi.onrender.com/api/login", formData)
+  axios.post("http://127.0.0.1:8000/api/login/", formData)
       .then((response) => {
-        // Handle success if needed
        if (response.status===200){
         console.log("Form submitted successfully!");
         console.log(response.data);
         window.location.href="/dashboard"
+        const token=(response.data.token)
+        sessionStorage.setItem('token',token)
        }
        else{
         console.log("Error")
@@ -61,10 +62,10 @@ const handleChange = (e) => {
 
 <div className="form-control w-full max-w-xs">
   <label className="label">
-    <span className="label-text">What is your email?</span>
+    <span className="label-text">What is your username?</span>
     <span className="label-text-alt text-red-500">*</span>
   </label>
-  <input type="email" name="email" value={setFormData.email}  onChange={handleChange} required placeholder="Type here" className="input input-bordered w-full max-w-xs" />
+  <input type="text" name="username" value={setFormData.username}  onChange={handleChange} required placeholder="Type here" className="input input-bordered w-full max-w-xs" />
   <label className="label">
   </label>
 </div>
